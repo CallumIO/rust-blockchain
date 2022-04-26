@@ -78,11 +78,19 @@ impl Block {
             transactions.push(transaction.source.to_owned());
             transactions.push(transaction.destination.to_owned());
             transactions.push(transaction.data.to_owned());
+            transactions.push("\n".to_string());
         }
-        return transactions.join("\n");
+        return format!(
+            "Begin Block {}\nWith Hash: {}\nPrevious Hash: {}\n\n{}End Block {}\n",
+            self.block_id,
+            self.hash,
+            self.prev_hash,
+            transactions.join("\n"),
+            self.block_id,
+        );
     }
 }
 fn byte_array_to_hex(bytes: Vec<u8>) -> String {
     let strs: Vec<String> = bytes.iter().map(|b| format!("{:02X}", b)).collect();
-    return strs.join(" ");
+    return strs.join("").to_lowercase();
 }
