@@ -48,6 +48,7 @@ impl Blockchain {
 #[cfg(test)]
 mod test {
     use super::*;
+
     #[test]
     fn add_new_block() {
         let mut bc = Blockchain::new();
