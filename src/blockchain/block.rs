@@ -125,6 +125,12 @@ mod test {
     }
 
     #[test]
+    fn rehash_block() {
+        let block = Block::genesis();
+        assert_eq!(block.hash_block(), block.hash);
+    }
+
+    #[test]
     fn bytes_convert_to_hex_string() {
         assert_eq!(
             byte_array_to_hex(vec![84, 101, 115, 116, 32, 86, 97, 108, 117, 101, 10]),
