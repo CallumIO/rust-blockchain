@@ -71,6 +71,7 @@ impl Block {
     pub fn next_block(last_block: Block, data: Vec<Transaction>) -> Block {
         return Block::new(last_block.hash, last_block.block_id + 1, data);
     }
+
     pub fn block_details(&self) -> String {
         let mut transactions: Vec<String> = vec![];
         for transaction in self.data.iter() {
@@ -90,7 +91,79 @@ impl Block {
         );
     }
 }
+
 fn byte_array_to_hex(bytes: Vec<u8>) -> String {
     let strs: Vec<String> = bytes.iter().map(|b| format!("{:02X}", b)).collect();
     return strs.join("").to_lowercase();
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    //TODO: Hash and transaction data cannot be tested due to using a timestamp. Refactoring necessary to enable testing
+    #[test]
+    fn create_new_block() {
+        let block = Block::new(
+            "Previous Hash".to_string(),
+            99,
+            vec![
+                Transaction::new(
+                    "One".to_string(),
+                    "Another".to_string(),
+                    "30000".to_string(),
+                ),
+                Transaction::new(
+                    "Another".to_string(),
+                    "One".to_string(),
+                    "20000".to_string(),
+                ),
+            ],
+        );
+        assert_eq!(block.prev_hash, "Previous Hash");
+        assert_eq!(block.block_id, 99);
+    }
+
+    #[test]
+    fn rehash_block() {
+        let block = Block::genesis();
+        assert_eq!(block.hash_block(), block.hash);
+    }
+
+    #[test]
+    fn rehash_changed_block() {
+        let mut block = Block::genesis();
+        block.prev_hash = "Not the same as before".to_string();
+        assert_ne!(block.hash_block(), block.hash);
+    }
+
+    #[test]
+    fn create_next_block() {
+        let genesis = Block::genesis();
+        let block = Block::next_block(
+            genesis.to_owned(),
+            vec![
+                Transaction::new(
+                    "One".to_string(),
+                    "Another".to_string(),
+                    "30000".to_string(),
+                ),
+                Transaction::new(
+                    "Another".to_string(),
+                    "One".to_string(),
+                    "20000".to_string(),
+                ),
+            ],
+        );
+        assert_eq!(block.prev_hash, genesis.hash);
+        assert_eq!(block.block_id, 1);
+    }
+
+    #[test]
+    fn bytes_convert_to_hex_string() {
+        assert_eq!(
+            byte_array_to_hex(vec![84, 101, 115, 116, 32, 86, 97, 108, 117, 101, 10]),
+            "546573742056616c75650a"
+        );
+    }
 }
