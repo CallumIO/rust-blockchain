@@ -75,4 +75,16 @@ mod test {
         assert_eq!(bc.pending_transactions[0].destination, "Another");
         assert_eq!(bc.pending_transactions[0].data, "30000");
     }
+
+    #[test]
+    fn pending_transactions_removed_on_new_block() {
+        let mut bc = Blockchain::new();
+        bc.add_pending_transaction(
+            "One".to_string(),
+            "Another".to_string(),
+            "30000".to_string(),
+        );
+        bc.add_block();
+        assert!(bc.pending_transactions.is_empty());
+    }
 }
