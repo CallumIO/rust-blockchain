@@ -99,4 +99,12 @@ fn byte_array_to_hex(bytes: Vec<u8>) -> String {
 #[cfg(test)]
 mod test {
     use super::*;
+
+    #[test]
+    fn bytes_convert_to_hex_string() {
+        assert_eq!(
+            byte_array_to_hex(vec![84, 101, 115, 116, 32, 86, 97, 108, 117, 101, 10]),
+            "546573742056616c75650a"
+        );
+    }
 }
