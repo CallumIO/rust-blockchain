@@ -4,12 +4,13 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::convert::TryInto;
 
+#[derive(Clone)]
 pub struct Block {
-    timestamp: i64,
-    hash: String,
-    block_id: i64,
-    prev_hash: String,
-    data: Vec<Transaction>,
+    pub timestamp: i64,
+    pub hash: String,
+    pub block_id: i64,
+    pub prev_hash: String,
+    pub data: Vec<Transaction>,
 }
 
 impl Block {
@@ -48,6 +49,25 @@ impl Block {
             )],
         );
     }
+
+    pub fn hash_block(&self) -> String {
+        let mut sha = Sha256::new();
+        let to_hash = [
+            self.timestamp.to_string(),
+            self.prev_hash.to_owned(),
+            byte_array_to_hex(bincode::serialize(&self.data).unwrap()),
+        ];
+        sha.update(to_hash.join(""));
+        let hash_bytes = sha.finalize();
+        let hash = byte_array_to_hex(
+            hash_bytes
+                .as_slice()
+                .try_into()
+                .expect("Error hashing block"),
+        );
+        return hash;
+    }
+
     pub fn next_block(last_block: Block, data: Vec<Transaction>) -> Block {
         return Block::new(last_block.hash, last_block.block_id + 1, data);
     }
