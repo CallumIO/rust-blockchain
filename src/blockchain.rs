@@ -62,4 +62,17 @@ mod test {
         assert_eq!(last_block.data[0].destination, "Another");
         assert_eq!(last_block.data[0].data, "30000");
     }
+
+    #[test]
+    fn add_pending_transaction_to_array() {
+        let mut bc = Blockchain::new();
+        bc.add_pending_transaction(
+            "One".to_string(),
+            "Another".to_string(),
+            "30000".to_string(),
+        );
+        assert_eq!(bc.pending_transactions[0].source, "One");
+        assert_eq!(bc.pending_transactions[0].destination, "Another");
+        assert_eq!(bc.pending_transactions[0].data, "30000");
+    }
 }
