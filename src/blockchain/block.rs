@@ -55,7 +55,7 @@ impl Block {
         return "";
     }
 }
-pub fn byte_array_to_hex(bytes: Vec<u8>) -> String {
+fn byte_array_to_hex(bytes: Vec<u8>) -> String {
     let strs: Vec<String> = bytes.iter().map(|b| format!("{:02X}", b)).collect();
     return strs.join(" ");
 }
