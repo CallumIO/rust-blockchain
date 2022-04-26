@@ -16,6 +16,11 @@ impl Blockchain {
         };
     }
 
+    pub fn add_pending_transaction(&mut self, source: String, destination: String, data: String) {
+        self.pending_transactions
+            .push(Transaction::new(source, destination, data));
+    }
+
     pub fn add_block(&mut self) {
         let prev_block = self.chain.last().unwrap().to_owned();
         let block = Block::next_block(prev_block, self.pending_transactions.to_owned());
