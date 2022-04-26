@@ -47,4 +47,19 @@ impl Blockchain {
 #[cfg(test)]
 mod test {
     use super::*;
+    #[test]
+    fn add_new_block() {
+        let mut bc = Blockchain::new();
+        bc.add_pending_transaction(
+            "One".to_string(),
+            "Another".to_string(),
+            "30000".to_string(),
+        );
+        bc.add_block();
+        let last_block = bc.chain.last().unwrap().to_owned();
+        assert_eq!(last_block.block_id, 1i64);
+        assert_eq!(last_block.data[0].source, "One");
+        assert_eq!(last_block.data[0].destination, "Another");
+        assert_eq!(last_block.data[0].data, "30000");
+    }
 }
