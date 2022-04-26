@@ -131,6 +131,28 @@ mod test {
     }
 
     #[test]
+    fn create_next_block() {
+        let genesis = Block::genesis();
+        let block = Block::next_block(
+            genesis.to_owned(),
+            vec![
+                Transaction::new(
+                    "One".to_string(),
+                    "Another".to_string(),
+                    "30000".to_string(),
+                ),
+                Transaction::new(
+                    "Another".to_string(),
+                    "One".to_string(),
+                    "20000".to_string(),
+                ),
+            ],
+        );
+        assert_eq!(block.prev_hash, genesis.hash);
+        assert_eq!(block.block_id, 1);
+    }
+
+    #[test]
     fn bytes_convert_to_hex_string() {
         assert_eq!(
             byte_array_to_hex(vec![84, 101, 115, 116, 32, 86, 97, 108, 117, 101, 10]),
