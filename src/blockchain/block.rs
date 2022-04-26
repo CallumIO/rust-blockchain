@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::convert::TryInto;
 
+#[derive(Clone)]
 pub struct Block {
     timestamp: i64,
     hash: String,
