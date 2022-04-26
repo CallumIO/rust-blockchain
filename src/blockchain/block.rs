@@ -71,6 +71,7 @@ impl Block {
     pub fn next_block(last_block: Block, data: Vec<Transaction>) -> Block {
         return Block::new(last_block.hash, last_block.block_id + 1, data);
     }
+
     pub fn block_details(&self) -> String {
         let mut transactions: Vec<String> = vec![];
         for transaction in self.data.iter() {
@@ -100,14 +101,6 @@ fn byte_array_to_hex(bytes: Vec<u8>) -> String {
 mod test {
     use super::*;
 
-    #[test]
-    fn bytes_convert_to_hex_string() {
-        assert_eq!(
-            byte_array_to_hex(vec![84, 101, 115, 116, 32, 86, 97, 108, 117, 101, 10]),
-            "546573742056616c75650a"
-        );
-    }
-
     //TODO: Hash and transaction data cannot be tested due to using a timestamp. Refactoring necessary to enable testing
     #[test]
     fn create_new_block() {
@@ -129,5 +122,13 @@ mod test {
         );
         assert_eq!(block.prev_hash, "Previous Hash");
         assert_eq!(block.block_id, 99);
+    }
+
+    #[test]
+    fn bytes_convert_to_hex_string() {
+        assert_eq!(
+            byte_array_to_hex(vec![84, 101, 115, 116, 32, 86, 97, 108, 117, 101, 10]),
+            "546573742056616c75650a"
+        );
     }
 }
