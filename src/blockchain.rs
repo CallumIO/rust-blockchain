@@ -87,4 +87,23 @@ mod test {
         bc.add_block();
         assert!(bc.pending_transactions.is_empty());
     }
+
+    #[test]
+    fn chain_verification_unchanged() {
+        let mut bc = Blockchain::new();
+        bc.add_pending_transaction(
+            "One".to_string(),
+            "Another".to_string(),
+            "30000".to_string(),
+        );
+        bc.add_block();
+        bc.add_pending_transaction(
+            "Another".to_string(),
+            "One".to_string(),
+            "20000".to_string(),
+        );
+        bc.add_block();
+        assert!(bc.verify());
+    }
+
 }
