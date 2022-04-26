@@ -106,4 +106,27 @@ mod test {
         assert!(bc.verify());
     }
 
+    #[test]
+    fn chain_verification_changed_data() {
+        let mut bc = Blockchain::new();
+        bc.add_pending_transaction(
+            "One".to_string(),
+            "Another".to_string(),
+            "30000".to_string(),
+        );
+        bc.add_block();
+        bc.add_pending_transaction(
+            "Another".to_string(),
+            "One".to_string(),
+            "20000".to_string(),
+        );
+        bc.add_block();
+        bc.chain[1].data = vec![Transaction::new(
+            "One".to_string(),
+            "Another".to_string(),
+            "20000".to_string(),
+        )];
+        assert!(!bc.verify());
+    }
+
 }
