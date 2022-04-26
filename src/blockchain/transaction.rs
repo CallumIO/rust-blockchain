@@ -1,5 +1,7 @@
 use chrono::prelude::*;
+use serde::{Serialize, Deserialize}
 
+#[derive(Serialize, Deserialize)]
 pub struct Transaction {
     pub timestamp: i64,
     pub source: String,
