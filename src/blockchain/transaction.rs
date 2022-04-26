@@ -19,3 +19,21 @@ impl Transaction {
         };
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn create_transaction() {
+        let my_transaction = Transaction::new(
+            "One".to_string(),
+            "Another".to_string(),
+            "30000".to_string(),
+        );
+        assert_eq!(my_transaction.timestamp, Utc::now().timestamp()); //TODO: may fail if slow to execute?
+        assert_eq!(my_transaction.source, "One");
+        assert_eq!(my_transaction.destination, "Another");
+        assert_eq!(my_transaction.data, "30000");
+    }
+}
