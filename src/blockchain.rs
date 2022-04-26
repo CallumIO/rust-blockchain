@@ -43,3 +43,8 @@ impl Blockchain {
         return true;
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+}
