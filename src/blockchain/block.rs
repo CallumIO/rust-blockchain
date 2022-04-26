@@ -51,8 +51,15 @@ impl Block {
     pub fn next_block(last_block: Block, data: Vec<Transaction>) -> Block {
         return Block::new(last_block.hash, last_block.block_id + 1, data);
     }
-    pub fn block_details(&self) -> &str {
-        return "";
+    pub fn block_details(&self) -> String {
+        let mut transactions: Vec<String> = vec![];
+        for transaction in self.data.iter() {
+            transactions.push(transaction.timestamp.to_owned().to_string());
+            transactions.push(transaction.source.to_owned());
+            transactions.push(transaction.destination.to_owned());
+            transactions.push(transaction.data.to_owned());
+        }
+        return transactions.join("\n");
     }
 }
 fn byte_array_to_hex(bytes: Vec<u8>) -> String {

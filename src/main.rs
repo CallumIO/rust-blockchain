@@ -2,5 +2,6 @@ mod blockchain;
 use blockchain::Blockchain;
 
 fn main() {
-    println!("Hello, world!");
+    let mut bc = Blockchain::new();
+    println!("{}", bc.chain[0].block_details());
 }
