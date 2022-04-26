@@ -18,7 +18,7 @@ impl Block {
         let mut sha = Sha256::new();
         let to_hash = [
             timestamp.to_string(),
-            prev_hash,
+            prev_hash.to_owned(),
             byte_array_to_hex(bincode::serialize(&data).unwrap()),
         ];
         sha.update(to_hash.join(""));
@@ -49,7 +49,7 @@ impl Block {
         );
     }
     pub fn next_block(last_block: Block, data: Vec<Transaction>) -> Block {
-        return Block {};
+        return Block::new(last_block.hash, last_block.block_id + 1, data);
     }
     pub fn block_details(&self) -> &str {
         return "";
