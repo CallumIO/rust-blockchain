@@ -38,7 +38,15 @@ impl Block {
         };
     }
     pub fn genesis() -> Block {
-        return Block {};
+        return Block::new(
+            "0".to_string(),
+            0i64,
+            vec![Transaction::new(
+                "The Beginning".to_string(),
+                "The End".to_string(),
+                "{}".to_string(),
+            )],
+        );
     }
     pub fn next_block(last_block: Block, data: Vec<Transaction>) -> Block {
         return Block {};
