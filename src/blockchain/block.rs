@@ -131,6 +131,13 @@ mod test {
     }
 
     #[test]
+    fn rehash_changed_block() {
+        let mut block = Block::genesis();
+        block.prev_hash = "Not the same as before".to_string();
+        assert_ne!(block.hash_block(), block.hash);
+    }
+
+    #[test]
     fn create_next_block() {
         let genesis = Block::genesis();
         let block = Block::next_block(
