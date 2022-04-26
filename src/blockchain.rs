@@ -24,6 +24,7 @@ impl Blockchain {
     pub fn add_block(&mut self) {
         let prev_block = self.chain.last().unwrap().to_owned();
         let block = Block::next_block(prev_block, self.pending_transactions.to_owned());
+        self.pending_transactions = vec![];
         self.chain.push(block);
     }
 
