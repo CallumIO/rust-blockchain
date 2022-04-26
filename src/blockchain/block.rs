@@ -6,11 +6,11 @@ use std::convert::TryInto;
 
 #[derive(Clone)]
 pub struct Block {
-    timestamp: i64,
-    hash: String,
-    block_id: i64,
-    prev_hash: String,
-    data: Vec<Transaction>,
+    pub timestamp: i64,
+    pub hash: String,
+    pub block_id: i64,
+    pub prev_hash: String,
+    pub data: Vec<Transaction>,
 }
 
 impl Block {
