@@ -30,11 +30,11 @@ impl Block {
                 .expect("Error hashing block"),
         );
         return Block {
-            timestamp: timestamp,
-            hash: hash,
-            block_id: block_id,
+            timestamp,
+            hash,
+            block_id,
             prev_hash: prev_hash.to_owned(),
-            data: data,
+            data,
         };
     }
     pub fn genesis() -> Block {

@@ -13,9 +13,9 @@ impl Transaction {
     pub fn new(source: String, destination: String, data: String) -> Transaction {
         return Transaction {
             timestamp: Utc::now().timestamp(),
-            source: source,
-            destination: destination,
-            data: data,
+            source,
+            destination,
+            data,
         };
     }
 }
