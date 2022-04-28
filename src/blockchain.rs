@@ -59,10 +59,10 @@ mod test {
         );
         bc.add_block();
         let last_block = bc.chain.last().unwrap();
-        assert_eq!(&last_block.block_id, &1i64);
-        assert_eq!(&last_block.data[0].source, &"One");
-        assert_eq!(&last_block.data[0].destination, &"Another");
-        assert_eq!(&last_block.data[0].data, &"30000");
+        assert_eq!(last_block.block_id, 1i64);
+        assert_eq!(last_block.data[0].source, "One");
+        assert_eq!(last_block.data[0].destination, "Another");
+        assert_eq!(last_block.data[0].data, "30000");
     }
 
     #[test]
