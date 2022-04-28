@@ -22,8 +22,8 @@ impl Blockchain {
     }
 
     pub fn add_block(&mut self) {
-        let prev_block = self.chain.last().unwrap().to_owned();
-        let block = Block::next_block(prev_block, self.pending_transactions.to_owned());
+        let prev_block = self.chain.last().unwrap();
+        let block = Block::next_block(prev_block, &self.pending_transactions);
         self.pending_transactions = vec![];
         self.chain.push(block);
     }
@@ -31,8 +31,8 @@ impl Blockchain {
     pub fn verify(&self) -> bool {
         let mut i = 1;
         while i < self.chain.len() {
-            let cur_block = self.chain[i].to_owned();
-            let prev_block = self.chain[i - 1].to_owned();
+            let cur_block = &self.chain[i];
+            let prev_block = &self.chain[i - 1];
             if (cur_block.prev_hash != prev_block.hash)
                 || (cur_block.hash != cur_block.hash_block())
             {
@@ -58,11 +58,11 @@ mod test {
             "30000".to_string(),
         );
         bc.add_block();
-        let last_block = bc.chain.last().unwrap().to_owned();
-        assert_eq!(last_block.block_id, 1i64);
-        assert_eq!(last_block.data[0].source, "One");
-        assert_eq!(last_block.data[0].destination, "Another");
-        assert_eq!(last_block.data[0].data, "30000");
+        let last_block = bc.chain.last().unwrap();
+        assert_eq!(&last_block.block_id, &1i64);
+        assert_eq!(&last_block.data[0].source, &"One");
+        assert_eq!(&last_block.data[0].destination, &"Another");
+        assert_eq!(&last_block.data[0].data, &"30000");
     }
 
     #[test]

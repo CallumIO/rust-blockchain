@@ -14,7 +14,7 @@ pub struct Block {
 }
 
 impl Block {
-    pub fn new(prev_hash: String, block_id: i64, data: Vec<Transaction>) -> Block {
+    pub fn new(prev_hash: &String, block_id: i64, data: Vec<Transaction>) -> Block {
         let timestamp = Utc::now().timestamp();
         let mut sha = Sha256::new();
         let to_hash = [
@@ -34,13 +34,13 @@ impl Block {
             timestamp: timestamp,
             hash: hash,
             block_id: block_id,
-            prev_hash: prev_hash,
+            prev_hash: prev_hash.to_owned(),
             data: data,
         };
     }
     pub fn genesis() -> Block {
         return Block::new(
-            "0".to_string(),
+            &"0".to_string(),
             0i64,
             vec![Transaction::new(
                 "The Beginning".to_string(),
@@ -68,18 +68,14 @@ impl Block {
         return hash;
     }
 
-    pub fn next_block(last_block: Block, data: Vec<Transaction>) -> Block {
-        return Block::new(last_block.hash, last_block.block_id + 1, data);
+    pub fn next_block(last_block: &Block, data: &Vec<Transaction>) -> Block {
+        return Block::new(&last_block.hash, last_block.block_id + 1, data.to_owned());
     }
 
     pub fn block_details(&self) -> String {
-        let mut transactions: Vec<String> = vec![];
+        let mut transactions = vec![];
         for transaction in self.data.iter() {
-            transactions.push(transaction.timestamp.to_owned().to_string());
-            transactions.push(transaction.source.to_owned());
-            transactions.push(transaction.destination.to_owned());
-            transactions.push(transaction.data.to_owned());
-            transactions.push("\n".to_string());
+            transactions.push(format!("{}\n{}\n{}\n{}\n", &transaction.timestamp.to_string(), &transaction.source, &transaction.destination, &transaction.data));
         }
         return format!(
             "Begin Block {}\nWith Hash: {}\nPrevious Hash: {}\n\n{}End Block {}\n",
@@ -105,7 +101,7 @@ mod test {
     #[test]
     fn create_new_block() {
         let block = Block::new(
-            "Previous Hash".to_string(),
+            &"Previous Hash".to_string(),
             99,
             vec![
                 Transaction::new(
@@ -140,9 +136,10 @@ mod test {
     #[test]
     fn create_next_block() {
         let genesis = Block::genesis();
+        let gen_hash = &genesis.hash;
         let block = Block::next_block(
-            genesis.to_owned(),
-            vec![
+            &genesis,
+            &vec![
                 Transaction::new(
                     "One".to_string(),
                     "Another".to_string(),
@@ -155,7 +152,7 @@ mod test {
                 ),
             ],
         );
-        assert_eq!(block.prev_hash, genesis.hash);
+        assert_eq!(&block.prev_hash, gen_hash);
         assert_eq!(block.block_id, 1);
     }
 
