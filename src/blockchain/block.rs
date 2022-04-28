@@ -1,6 +1,5 @@
 use crate::blockchain::transaction::Transaction;
 use chrono::prelude::*;
-//use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::convert::TryInto;
 
@@ -75,7 +74,13 @@ impl Block {
     pub fn block_details(&self) -> String {
         let mut transactions = vec![];
         for transaction in self.data.iter() {
-            transactions.push(format!("{}\n{}\n{}\n{}\n", &transaction.timestamp.to_string(), &transaction.source, &transaction.destination, &transaction.data));
+            transactions.push(format!(
+                "{}\n{}\n{}\n{}\n",
+                &transaction.timestamp.to_string(),
+                &transaction.source,
+                &transaction.destination,
+                &transaction.data
+            ));
         }
         return format!(
             "Begin Block {}\nWith Hash: {}\nPrevious Hash: {}\n\n{}End Block {}\n",
