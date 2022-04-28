@@ -4,14 +4,14 @@ use blockchain::Blockchain;
 fn main() {
     let mut bc = Blockchain::new();
     bc.add_pending_transaction(
-        "callum".to_string(),
-        "not callum".to_string(),
-        "3000".to_string(),
+        String::from("callum"),
+        String::from("not callum"),
+        String::from("3000"),
     );
     bc.add_pending_transaction(
-        "not callum".to_string(),
-        "callum".to_string(),
-        "1000".to_string(),
+        String::from("not callum"),
+        String::from("callum"),
+        String::from("1000"),
     );
     bc.add_block();
     println!("{}", bc.chain[0].block_details());

@@ -42,9 +42,9 @@ impl Block {
             &"0".to_string(),
             0i64,
             vec![Transaction::new(
-                "The Beginning".to_string(),
-                "The End".to_string(),
-                "{}".to_string(),
+                String::from("The Beginning"),
+                String::from("The End"),
+                String::from("{}"),
             )],
         );
     }
@@ -110,14 +110,14 @@ mod test {
             99,
             vec![
                 Transaction::new(
-                    "One".to_string(),
-                    "Another".to_string(),
-                    "30000".to_string(),
+                    String::from("One"),
+                    String::from("Another"),
+                    String::from("30000"),
                 ),
                 Transaction::new(
-                    "Another".to_string(),
-                    "One".to_string(),
-                    "20000".to_string(),
+                    String::from("Another"),
+                    String::from("One"),
+                    String::from("20000"),
                 ),
             ],
         );
@@ -134,7 +134,7 @@ mod test {
     #[test]
     fn rehash_changed_block() {
         let mut block = Block::genesis();
-        block.prev_hash = "Not the same as before".to_string();
+        block.prev_hash = String::from("Not the same as before");
         assert_ne!(block.hash_block(), block.hash);
     }
 
@@ -146,14 +146,14 @@ mod test {
             &genesis,
             &vec![
                 Transaction::new(
-                    "One".to_string(),
-                    "Another".to_string(),
-                    "30000".to_string(),
+                    String::from("One"),
+                    String::from("Another"),
+                    String::from("30000"),
                 ),
                 Transaction::new(
-                    "Another".to_string(),
-                    "One".to_string(),
-                    "20000".to_string(),
+                    String::from("Another"),
+                    String::from("One"),
+                    String::from("20000"),
                 ),
             ],
         );

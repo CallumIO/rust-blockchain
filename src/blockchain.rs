@@ -53,9 +53,9 @@ mod test {
     fn add_new_block() {
         let mut bc = Blockchain::new();
         bc.add_pending_transaction(
-            "One".to_string(),
-            "Another".to_string(),
-            "30000".to_string(),
+            String::from("One"),
+            String::from("Another"),
+            String::from("30000"),
         );
         bc.add_block();
         let last_block = bc.chain.last().unwrap();
@@ -69,9 +69,9 @@ mod test {
     fn add_pending_transaction_to_array() {
         let mut bc = Blockchain::new();
         bc.add_pending_transaction(
-            "One".to_string(),
-            "Another".to_string(),
-            "30000".to_string(),
+            String::from("One"),
+            String::from("Another"),
+            String::from("30000"),
         );
         assert_eq!(bc.pending_transactions[0].source, "One");
         assert_eq!(bc.pending_transactions[0].destination, "Another");
@@ -82,9 +82,9 @@ mod test {
     fn pending_transactions_removed_on_new_block() {
         let mut bc = Blockchain::new();
         bc.add_pending_transaction(
-            "One".to_string(),
-            "Another".to_string(),
-            "30000".to_string(),
+            String::from("One"),
+            String::from("Another"),
+            String::from("30000"),
         );
         bc.add_block();
         assert!(bc.pending_transactions.is_empty());
@@ -94,15 +94,15 @@ mod test {
     fn chain_verification_unchanged() {
         let mut bc = Blockchain::new();
         bc.add_pending_transaction(
-            "One".to_string(),
-            "Another".to_string(),
-            "30000".to_string(),
+            String::from("One"),
+            String::from("Another"),
+            String::from("30000"),
         );
         bc.add_block();
         bc.add_pending_transaction(
-            "Another".to_string(),
-            "One".to_string(),
-            "20000".to_string(),
+            String::from("Another"),
+            String::from("One"),
+            String::from("20000"),
         );
         bc.add_block();
         assert!(bc.verify());
@@ -112,21 +112,21 @@ mod test {
     fn chain_verification_changed_data() {
         let mut bc = Blockchain::new();
         bc.add_pending_transaction(
-            "One".to_string(),
-            "Another".to_string(),
-            "30000".to_string(),
+            String::from("One"),
+            String::from("Another"),
+            String::from("30000"),
         );
         bc.add_block();
         bc.add_pending_transaction(
-            "Another".to_string(),
-            "One".to_string(),
-            "20000".to_string(),
+            String::from("Another"),
+            String::from("One"),
+            String::from("20000"),
         );
         bc.add_block();
         bc.chain[1].data = vec![Transaction::new(
-            "One".to_string(),
-            "Another".to_string(),
-            "20000".to_string(),
+            String::from("One"),
+            String::from("Another"),
+            String::from("20000"),
         )];
         assert!(!bc.verify());
     }
@@ -135,15 +135,15 @@ mod test {
     fn chain_verification_changed_prev_hash() {
         let mut bc = Blockchain::new();
         bc.add_pending_transaction(
-            "One".to_string(),
-            "Another".to_string(),
-            "30000".to_string(),
+            String::from("One"),
+            String::from("Another"),
+            String::from("30000"),
         );
         bc.add_block();
         bc.add_pending_transaction(
-            "Another".to_string(),
-            "One".to_string(),
-            "20000".to_string(),
+            String::from("Another"),
+            String::from("One"),
+            String::from("20000"),
         );
         bc.add_block();
         bc.chain[1].prev_hash = "changed prev_hash".to_string();
@@ -154,15 +154,15 @@ mod test {
     fn chain_verification_changed_hash() {
         let mut bc = Blockchain::new();
         bc.add_pending_transaction(
-            "One".to_string(),
-            "Another".to_string(),
-            "30000".to_string(),
+            String::from("One"),
+            String::from("Another"),
+            String::from("30000"),
         );
         bc.add_block();
         bc.add_pending_transaction(
-            "Another".to_string(),
-            "One".to_string(),
-            "20000".to_string(),
+            String::from("Another"),
+            String::from("One"),
+            String::from("20000"),
         );
         bc.add_block();
         bc.chain[1].hash = "changed hash".to_string();

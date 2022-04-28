@@ -27,9 +27,9 @@ mod test {
     #[test]
     fn create_transaction() {
         let my_transaction = Transaction::new(
-            "One".to_string(),
-            "Another".to_string(),
-            "30000".to_string(),
+            String::from("One"),
+            String::from("Another"),
+            String::from("30000"),
         );
         assert_eq!(my_transaction.timestamp, Utc::now().timestamp()); //TODO: may fail if slow to execute?
         assert_eq!(my_transaction.source, "One");
